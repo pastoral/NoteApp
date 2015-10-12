@@ -37,6 +37,9 @@ public class EditNoteActivity extends AppCompatActivity {
     private void saveNote(View view) {
         postTitle = titleEditText.getText().toString().trim();
         postContent = contentEditText.getText().toString().trim();
+        if(postTitle!= null && postContent!=null){
+            
+        }
     }
 
     @Override
