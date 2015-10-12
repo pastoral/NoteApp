@@ -38,7 +38,7 @@ public class EditNoteActivity extends AppCompatActivity {
         postTitle = titleEditText.getText().toString().trim();
         postContent = contentEditText.getText().toString().trim();
         if(postTitle!= null && postContent!=null){
-            
+            return;
         }
     }
 
