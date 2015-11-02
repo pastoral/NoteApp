@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ public class EditNoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // getActionBar().setDisplayHomeAsUpEnabled(true);
+      //  requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_edit_note);
 
         Intent intent = this.getIntent();
@@ -61,13 +63,17 @@ public class EditNoteActivity extends AppCompatActivity {
 
             if (note == null) {
             //create new post
-                ParseObject post = new ParseObject("Post");
+                final ParseObject post = new ParseObject("Post");
                 post.put("title",postTitle);
                 post.put("content", postContent);
+                //setProgressBarIndeterminateVisibility(true);
                 post.saveInBackground(new SaveCallback(){
                     @Override
                     public void done(ParseException e) {
+                       // setProgressBarIndeterminateVisibility(false);
                         if(e==null){
+                            note = new Note(post.getObjectId(),postTitle,postContent);// We are creating a Note
+                            //object and preventing note to be null after save operation
                             Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
                         }
                         else{
@@ -87,9 +93,11 @@ public class EditNoteActivity extends AppCompatActivity {
                         if(e==null){
                             parseObject.put("title",postTitle);
                             parseObject.put("content", postContent);
+                           // setProgressBarIndeterminateVisibility(true);
                             parseObject.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
+                                   // setProgressBarIndeterminateVisibility(false);
                                     if(e==null){
                                         // Updated successfully.
                                         Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
