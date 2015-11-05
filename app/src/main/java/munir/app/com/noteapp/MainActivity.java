@@ -102,4 +102,6 @@ public class MainActivity extends ListActivity {
         intent.putExtra("noteContent", note.getContent());
         startActivity(intent);
     }
+
+
 }
