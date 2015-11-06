@@ -16,6 +16,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,12 @@ public class MainActivity extends ListActivity {
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
-        //noteList = (ListView)findViewById(R.id.)
+                //noteList = (ListView)findViewById(R.id.)
+        //check if the current user is looged in
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null){
+            loadLoginView();
+        }
 
         posts = new ArrayList<Note>();
         ArrayAdapter<Note> adapter = new ArrayAdapter<Note>(this, R.layout.list_item_layoutt, posts);
@@ -74,20 +80,19 @@ public class MainActivity extends ListActivity {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 setProgressBarIndeterminate(false);
-             if (e==null){
-                 // If there are results, update the list of posts
-                 // and notify the adapter
-                 posts.clear();
-                 for(ParseObject post : list){
-                     Note note = new Note(post.getObjectId(),post.getString("title"),post.getString("content"));
-                     posts.add(note);
-                 }
-                 ((ArrayAdapter<Note>)getListAdapter()).notifyDataSetChanged();
-             }
-             else {
+                if (e == null) {
+                    // If there are results, update the list of posts
+                    // and notify the adapter
+                    posts.clear();
+                    for (ParseObject post : list) {
+                        Note note = new Note(post.getObjectId(), post.getString("title"), post.getString("content"));
+                        posts.add(note);
+                    }
+                    ((ArrayAdapter<Note>) getListAdapter()).notifyDataSetChanged();
+                } else {
 
-                 Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
-             }
+                    Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+                }
             }
         });
     }
@@ -100,6 +105,14 @@ public class MainActivity extends ListActivity {
         intent.putExtra("noteId" , note.getId());
         intent.putExtra("noteTitle", note.getTitle());
         intent.putExtra("noteContent", note.getContent());
+        startActivity(intent);
+    }
+
+    private void loadLoginView()
+    {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
