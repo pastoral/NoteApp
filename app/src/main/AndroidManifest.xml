@@ -44,6 +44,9 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:theme="@style/Theme.AppCompat">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="munir.app.com.noteapp.LoginActivity" />
         </activity>
     </application>
 

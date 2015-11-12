@@ -29,7 +29,7 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+       // requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
                 //noteList = (ListView)findViewById(R.id.)
         //check if the current user is looged in
@@ -69,6 +69,11 @@ public class MainActivity extends ListActivity {
             case R.id.action_settings: {
                 return true;
             }
+            case R.id.action_logout: {
+                ParseUser.logOut();
+                loadLoginView();
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -79,7 +84,7 @@ public class MainActivity extends ListActivity {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                setProgressBarIndeterminate(false);
+               // setProgressBarIndeterminate(false);
                 if (e == null) {
                     // If there are results, update the list of posts
                     // and notify the adapter
